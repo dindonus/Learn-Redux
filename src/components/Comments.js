@@ -1,38 +1,51 @@
 import React from 'react';
 
-const Comments = React.createClass({
-  renderComment(comment, i) {
+class Comments extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.removeComment = this.removeComment.bind(this);
+    this.renderComment = this.renderComment.bind(this);
+  }
+  renderComment(comment, index) {
     return (
-      <div className="comment" key={i}>
+      <div className="comment" key={index}>
         <p>
           <strong>{comment.user}</strong>
           {comment.text}
-          <button className="remove-comment" onClick={this.props.removeComment.bind(null,this.props.params.postId, i)}>&times;</button>
+          <button className="remove-comment" onClick={this.removeComment.bind(null, index)}>
+            &times;
+          </button>
         </p>
       </div>
-    );
-  },
-  handleSubmit(e) {
-    e.preventDefault();
-    this.props.addComment(this.props.params.postId, this.refs.author.value, this.refs.comment.value);
+    )
+  }
+  handleSubmit(event) {
+    event.preventDefault();
+    const { postId } = this.props;
+    const author = this.refs.author.value;
+    const comment = this.refs.comment.value;
+    this.addComment(author, comment);
     this.refs.commentForm.reset();
-  },
+  }
+  removeComment(index) {
+    this.props.onRemove(this.props.postId, index)
+  }
+  addComment(author, comment) {
+    this.props.onAdd(this.props.postId, author, comment)
+  }
   render() {
-
-    const comments = this.props.comments[this.props.params.postId] || [];
     return (
       <div className="comments">
-
-        {comments.map(this.renderComment)}
-
-        <form onSubmit={this.handleSubmit} ref="commentForm" className="comment-form">
+        {this.props.comments.map(this.renderComment)}
+        <form ref="commentForm" className="comment-form" onSubmit={this.handleSubmit}>
           <input type="text" ref="author" placeholder="author"/>
           <input type="text" ref="comment" placeholder="comment"/>
-          <input type="submit" hidden/>
+          <input type="submit" hidden />
         </form>
       </div>
-    );
+    )
   }
-});
+}
 
 export default Comments;

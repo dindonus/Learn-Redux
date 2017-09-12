@@ -1,19 +1,22 @@
 import React from 'react';
-import Photo from './Photo';
-import Comments from './Comments';
+import Photo from '../containers/Photo';
+import Comments from '../containers/Comments';
 
-const Single = React.createClass({
-
+class Single extends React.Component {
   render() {
-    const i = this.props.posts.findIndex((post)=> post.code === this.props.params.postId);
+    const { match, posts, comments } = this.props;
+    const { postId } = match.params;
+    const index = posts.findIndex((post) => post.code === postId);
+    const post = posts[index];
+    const postComments = comments[postId] || [];
 
     return (
       <div className="single-photo">
-        <Photo key={i} i={i} post={this.props.posts[i]} {...this.props} />
-        <Comments {...this.props} postId={i} />
+        <Photo index={index} post={post} comments={postComments} />
+        <Comments postId={postId} comments={postComments} />
       </div>
-    );
+    )
   }
-});
+}
 
 export default Single;

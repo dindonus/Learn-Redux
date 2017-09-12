@@ -1,20 +1,14 @@
 import React from 'react';
-import Photo from './Photo';
+import Photo from '../containers/Photo';
 
-const PhotoGrid = React.createClass({
-
-  handleSubmit(e) {
-    e.preventDefault();
-    this.props.addItem(this.refs.item.value);
-  },
-
+class PhotoGrid extends React.Component {
   render() {
     return (
       <div className="photo-grid">
-        {this.props.posts.map((post,i) => <Photo {...this.props} key={i} i={i} post={post} />)}
+        {this.props.posts.map((post, index) => <Photo key={index} index={index} post={post} comments={this.props.comments[post.code]} />)}
       </div>
-    );
+    )
   }
-});
+}
 
 export default PhotoGrid;

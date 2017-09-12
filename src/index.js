@@ -4,31 +4,20 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, Route, IndexRoute } from 'react-router'
+import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 import 'babel-polyfill';
 
 /*
   Import Components
 */
-import App from './components/App';
-import Single from './components/Single';
-import PhotoGrid from './components/PhotoGrid';
+import Single from './containers/Single';
+import PhotoGrid from './containers/PhotoGrid';
 
 /* Import CSS */
 import css from  './styles/style.styl';
 
 /* Import our data store */
-import store, { history } from './store';
-
-/*
-  Error Logging
-*/
-
-// import Raven from 'raven-js';
-// import { sentry_url } from './data/config';
-// if(window) {
-//   Raven.config(sentry_url).install();
-// }
+import store from './store';
 
 /*
   Rendering
@@ -36,14 +25,12 @@ import store, { history } from './store';
 */
 render(
   <Provider store={store}>
-    { /* Tell the Router to use our enhanced history */ }
-    <Router history={history}>
-      <Route path="/" component={App}>
-        <IndexRoute component={PhotoGrid} />
-        <Route path="/view/:postId" component={Single}></Route>
-      </Route>
-    </Router>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={PhotoGrid} />
+        <Route path="/view/:postId" component={Single} />
+      </Switch>
+    </BrowserRouter>
   </Provider>,
   document.getElementById('root')
 );
-

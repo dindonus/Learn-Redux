@@ -11,11 +11,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/wesbos/Learn-Redux.git"
+    "url": "https://github.com/dindonus/Learn-Redux.git"
   },
   "author": "Wes Bos",
   "license": "MIT",
-  "homepage": "https://github.com/wesbos/Learn-Redux",
+  "homepage": "https://github.com/dindonus/Learn-Redux",
   "dependencies": {
     "babel-core": "^6.5.2",
     "babel-eslint": "^6.1.2",

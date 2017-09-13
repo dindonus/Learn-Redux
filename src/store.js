@@ -1,15 +1,7 @@
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, compose } from 'redux';
 import rootReducer from './reducers/index';
 import comments from './data/comments';
 import posts from './data/posts';
-
-/*
-  Store
-
-  Redux apps have a single store which takes
-  1. All Reducers which we combined into `rootReducer`
-  2. An optional starting state - similar to React's getInitialState
-*/
 
 const defaultState = {
   posts,
@@ -21,12 +13,6 @@ const enhancers = compose(
 );
 
 const store = createStore(rootReducer, defaultState, enhancers);
-
-/*
-  Enable Hot Reloading for the reducers
-  We re-require() the reducers whenever any new code has been written.
-  Webpack will handle the rest
-*/
 
 if(module.hot) {
   module.hot.accept('./reducers/', () => {
